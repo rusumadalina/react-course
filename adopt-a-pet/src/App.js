@@ -4,9 +4,15 @@ import Header from './core/header/Header';
 import Tile from './shared/components/tile/Tile';
 
 function App() {
+  const userInfo = {
+    "firstName": "Rusu",
+    "lastName": "Madalina",
+    "age": 24
+  }
   return (
     <div>
-      <Header organizationalMenuItems={['About', 'Contact']}
+      <Header userInfo={userInfo}
+        organizationalMenuItems={['About', 'Contact']}
         petsMenuItems={['Cats', 'Dogs', 'All']}>
       </Header>
       <div className="container">
