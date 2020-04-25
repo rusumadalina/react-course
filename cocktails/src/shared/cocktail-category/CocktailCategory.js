@@ -1,45 +1,51 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import './CocktailCategory.scss';
-import Tile from '../shared/tile/Tile';
+
+import Tile from '../tile/Tile';
 
 class CocktailCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isListDisplayed: true
-        }
+            cocktails: [],
+        };
     }
 
-    toggleList = () =>
-        this.setState({ isListDisplayed: !this.state.isListDisplayed });
+    componentDidMount() {
+        axios.get(this.props.url)
+            .then(res => {
+                this.setState({ cocktails: res.data.drinks });
+            });
+    }
 
     render() {
-        const cocktailTiles = this.props.cocktails.map(cocktail =>
+        const cocktailTiles = this.state.cocktails.map(cocktail =>
             <Tile
                 title={cocktail.strDrink}
                 id={cocktail.idDrink}
                 imageUrl={cocktail.strDrinkThumb}
-                key={cocktail.idDrink}
-                imageClickedCallback={this.props.imageClickedCallback}
-                titleClickedCallback={this.props.titleClickedCallback}>
+                key={cocktail.idDrink}>
             </Tile>);
-            
-        const tilesContainer = this.state.isListDisplayed ?
-            (<div className="tiles-container">
+
+        const tilesContainer =
+            <div className="tiles-container">
                 {cocktailTiles}
-            </div>) : null;
+            </div>;
 
 
         return (
             <div className="category-container">
+                <input placeholder="Search by name"></input>
+
                 <div className="category-title">
                     <span></span>
-                    <h2 onClick={this.toggleList}>
+                    <h2>
                         {this.props.title}
                     </h2>
                     <span></span>
                 </div>
-
                 {tilesContainer}
             </div>
         );

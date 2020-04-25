@@ -15,4 +15,5 @@ class ExpandedTile extends Component {
     }
 }
 
+
 export default ExpandedTile;

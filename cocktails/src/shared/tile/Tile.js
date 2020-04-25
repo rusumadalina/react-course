@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import './Tile.scss';
 
 class Tile extends Component {
-    onImageClick = () =>
-        this.props.imageClickedCallback(this.props.title, this.props.imageUrl);
+    constructor(props){
+        super(props);
 
-    onTitleClick = () =>
-        this.props.titleClickedCallback(this.props.title, this.props.imageUrl, this.props.id);
-
+    }
+    onTileClick(cocktailId) {
+        console.log(cocktailId);
+    }
 
     render() {
         return (
-            <div className="tile">
+            <Link to={`/${this.props.id}`}
+            className="tile"
+                onClick={() => this.onTileClick(this.props.id)}>
                 <img src={this.props.imageUrl}
-                    alt=""
-                    onClick={this.onImageClick}>
+                    alt="">
                 </img>
-                <p onClick={this.onTitleClick}>{this.props.title}</p>
-            </div>)
+                <p>{this.props.title}</p>
+            </Link>)
     }
 }
 

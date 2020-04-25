@@ -1,15 +1,34 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import './App.scss';
+
 import Header from './core/header/Header';
 import Menu from './core/menu/Menu';
-import MainPage from './main-page/MainPage';
+import Alcoholic from './components/Alcoholic';
+import NonAlcoholic from './components/NonAlcoholic';
+import CocktailGlass from './components/CocktailGlass';
+import OrdinaryDrink from './components/OrdinaryDrink';
+import ChampagneFlute from './components/ChampagneFlute';
 
 function App() {
   return (
     <div>
       <Header></Header>
-      <Menu></Menu>
-      <MainPage></MainPage>
+      <BrowserRouter>
+        <Menu></Menu>
+        <div className="main-page-container">
+          <Switch>
+            <Route path="/alcoholic" component={Alcoholic}></Route>
+            <Route path="/nonAlcoholic" component={NonAlcoholic}></Route>
+            <Route path="/ordinaryDrink" component={OrdinaryDrink}></Route>
+            <Route path="/cocktailGlass" component={CocktailGlass}></Route>
+            <Route path="/champagneFlute" component={ChampagneFlute}></Route>
+
+            <Route path="/" component={Alcoholic}></Route>
+          </Switch>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
