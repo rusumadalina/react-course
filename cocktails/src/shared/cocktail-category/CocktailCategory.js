@@ -1,54 +1,43 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import './CocktailCategory.scss';
 
 import Tile from '../tile/Tile';
 
-class CocktailCategory extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cocktails: [],
-        };
-    }
+function CocktailCategory(props) {
+    const [cocktails, setCocktails] = useState([]);
 
-    componentDidMount() {
-        axios.get(this.props.url)
+    useEffect(() => {
+        axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?${props.filterValue}`)
             .then(res => {
-                this.setState({ cocktails: res.data.drinks });
+                setCocktails(res.data.drinks);
             });
-    }
+    }, [props.filterValue]);
 
-    render() {
-        const cocktailTiles = this.state.cocktails.map(cocktail =>
-            <Tile
-                title={cocktail.strDrink}
-                id={cocktail.idDrink}
-                imageUrl={cocktail.strDrinkThumb}
-                key={cocktail.idDrink}>
-            </Tile>);
+    const cocktailTiles = cocktails.map(cocktail =>
+        <Tile
+            title={cocktail.strDrink}
+            id={cocktail.idDrink}
+            imageUrl={cocktail.strDrinkThumb}
+            key={cocktail.idDrink}>
+        </Tile>);
 
-        const tilesContainer =
-            <div className="tiles-container">
-                {cocktailTiles}
-            </div>;
+    return (
+        <div className="category-container">
+            <input placeholder="Search by name"></input>
 
-
-        return (
-            <div className="category-container">
-                <input placeholder="Search by name"></input>
-
-                <div className="category-title">
-                    <span></span>
-                    <h2>
-                        {this.props.title}
-                    </h2>
-                    <span></span>
-                </div>
-                {tilesContainer}
+            <div className="category-title">
+                <span></span>
+                <h2>
+                    {props.title}
+                </h2>
+                <span></span>
             </div>
-        );
-    }
+            <div className="tiles-container">
+            {cocktailTiles}
+        </div>
+        </div>
+    );
 }
 export default CocktailCategory;

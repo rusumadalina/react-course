@@ -5,13 +5,28 @@ import './App.scss';
 
 import Header from './core/header/Header';
 import Menu from './core/menu/Menu';
-import Alcoholic from './components/Alcoholic';
-import NonAlcoholic from './components/NonAlcoholic';
-import CocktailGlass from './components/CocktailGlass';
-import OrdinaryDrink from './components/OrdinaryDrink';
-import ChampagneFlute from './components/ChampagneFlute';
+import CocktailCategory from './shared/cocktail-category/CocktailCategory';
+import CocktailDetails from './shared/cocktail-details/CocktailDetails';
 
 function App() {
+  const cocktailCategories = [
+    { path: '/alcoholic', title: 'Alcoholic Cocktails', filterValue: 'a=Alcoholic' },
+    { path: '/nonAlcoholic', title: 'Non-Alcoholic Cocktails', filterValue: 'a=Non_Alcoholic' },
+    { path: '/ordinaryDrink', title: 'Ordinary drink', filterValue: 'c=Ordinary_Drink' },
+    { path: '/cocktailGlass', title: 'Cocktail glass', filterValue: 'g=Cocktail_glass' },
+    { path: '/champagneFlute', title: 'Champagne flute', filterValue: 'g=Champagne_flute' },
+  ]
+
+  const CocktailCategoriesRouting = cocktailCategories.map((cocktailCategory) =>
+    <Route
+      key={cocktailCategory.path}
+      path={cocktailCategory.path}
+      render={() =>
+        <CocktailCategory
+          title={cocktailCategory.title}
+          filterValue={cocktailCategory.filterValue} />} />
+  );
+
   return (
     <div>
       <Header></Header>
@@ -19,13 +34,15 @@ function App() {
         <Menu></Menu>
         <div className="main-page-container">
           <Switch>
-            <Route path="/alcoholic" component={Alcoholic}></Route>
-            <Route path="/nonAlcoholic" component={NonAlcoholic}></Route>
-            <Route path="/ordinaryDrink" component={OrdinaryDrink}></Route>
-            <Route path="/cocktailGlass" component={CocktailGlass}></Route>
-            <Route path="/champagneFlute" component={ChampagneFlute}></Route>
+            <Route path="/details/:id" render={(props) =>
+              <CocktailDetails id={props.match.params.id} />} />
 
-            <Route path="/" component={Alcoholic}></Route>
+            {CocktailCategoriesRouting}
+
+            <Route path="/" render={() =>
+              <CocktailCategory
+                title='Alcoholic Cocktails'
+                filterValue='a=Alcoholic' />} />
           </Switch>
         </div>
       </BrowserRouter>

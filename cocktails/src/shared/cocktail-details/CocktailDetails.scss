@@ -1,41 +1,35 @@
 .cocktail-details {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 40px;
-}
-
-.title {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    span {
-        width: 40%;
-        border-top: solid 2px #e0dede;
-    }
-
-    h2 {
-        cursor: pointer;
-    }
-}
-
-.details {
-    display: flex;
+  }
+  
+  img{
     margin-top: 24px;
-    .side {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
+  }
+  
+  button {
+    align-self: flex-start;
+    width: 100px;
+    font-size: 18px;
+    color: #ffffff;
+    height: 40px;
+    border: none;
+    margin: 0;
+    padding: 0 24px;
+    background-color: #61a612;
+    border-radius: 4px;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  
+    &:focus {
+      outline: none;
     }
-
-    span {
-        width: 400px;
-        padding: 12px;
-        border-radius: 6px;
-        border: 1px solid #0093d2;
-        background-color: #c5eeff;
-        margin-bottom: 40px;
+  
+    &:hover {
+      cursor: pointer;
     }
-}
-
-button {
-    width: 150px;
-}
+  }
+  

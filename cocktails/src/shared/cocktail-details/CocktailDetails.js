@@ -1,31 +1,28 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
+
+import axios from 'axios';
+
 import './CocktailDetails.scss';
 
-class CocktailDetails extends Component {
-    onBackClicked = () => this.props.hideDetailsCallback();
+function CocktailDetails(props) {
+    let history = useHistory();
+    const [cocktail, setCocktail] = useState({});
 
-    render() {
-        return (
-            <div className="cocktail-details">
-                <div className="title">
-                    <span></span>
-                    <h2> Details </h2>
-                    <span></span>
-                </div>
-                <div className="details">
-                    <div className="side">
-                        <button onClick={this.onBackClicked}>Hide details</button>
-                        <img src={this.props.imageUrl} alt=""></img>
-                    </div>
-                    <div className="side">
-                        <span>{this.props.title}</span>
-                        <span>{this.props.id}</span>
-                    </div>
-                </div>
-            </div>
+    useEffect(() => {
+        axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${props.id}`)
+            .then(res => {
+                setCocktail(res.data.drinks[0]);
+            });
+    }, [props.id]);
 
-        );
-    }
+    return (
+        <div className="cocktail-details">
+            <h2>{cocktail.strDrink}</h2>
+            <img src={cocktail.strDrinkThumb} alt="" />
+            <button onClick={() => history.goBack()}>Back</button>
+        </div>
+    );
 }
 
 export default CocktailDetails;
