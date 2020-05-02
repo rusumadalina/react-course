@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import './App.scss';
 
@@ -7,6 +7,7 @@ import Header from './core/header/Header';
 import Menu from './core/menu/Menu';
 import CocktailCategory from './shared/cocktail-category/CocktailCategory';
 import CocktailDetails from './shared/cocktail-details/CocktailDetails';
+import AddCocktail from './components/AddCocktail';
 
 function App() {
   const cocktailCategories = [
@@ -34,6 +35,9 @@ function App() {
         <Menu></Menu>
         <div className="main-page-container">
           <Switch>
+            <Route path="/add" render={() =>
+              <AddCocktail/>} />
+
             <Route path="/details/:id" render={(props) =>
               <CocktailDetails id={props.match.params.id} />} />
 
@@ -45,6 +49,7 @@ function App() {
                 filterValue='a=Alcoholic' />} />
           </Switch>
         </div>
+      <Link to='/add' className="add-button">Add</Link>
       </BrowserRouter>
     </div>
   );
